@@ -447,3 +447,104 @@ body.light .gallery-section-title {
 body.light .art-quote {
   color: rgba(0,0,0,0.5);
 }
+
+/* ====================== MOBILE RESPONSIVE ====================== */
+@media (max-width: 768px) {
+
+  /* NAVBAR FIX - stops brand from wrapping */
+  #navbar {
+    padding: 0.8rem 1rem;
+    gap: 0.5rem;
+  }
+  #navbar .brand {
+    font-size: 1rem;
+    white-space: nowrap;
+  }
+  #navbar .nav-links {
+    gap: 0.6rem;
+  }
+  #navbar .nav-links a {
+    font-size: 0.75rem;
+  }
+  .theme-switch {
+    font-size: 0.75rem;
+    gap: 0.2rem;
+  }
+  .switch {
+    width: 34px;
+    height: 18px;
+  }
+  .slider::before {
+    height: 12px;
+    width: 12px;
+    left: 3px;
+    bottom: 3px;
+  }
+  .switch input:checked + .slider::before {
+    transform: translateX(16px);
+  }
+
+  /* HERO FIX */
+  #hero {
+    height: 70vh;
+    padding: 0 1rem;
+  }
+  .hero-title {
+    font-size: 2.2rem;
+  }
+  .hero-subtext {
+    font-size: 1rem;
+  }
+  .art-quote {
+    font-size: 0.85rem;
+    padding: 0 0.5rem;
+  }
+
+  /* SECTIONS FIX */
+  .section {
+    padding: 2.5rem 1rem;
+  }
+  .section-title {
+    font-size: 1.6rem;
+  }
+  .gallery-section-title {
+    font-size: 1.3rem;
+  }
+
+  /* GALLERY FIX - 2 columns on mobile */
+  .gallery-grid-inner {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.8rem !important;
+  }
+
+  /* BUDGET BAR FIX */
+  .budget-bar {
+    padding: 0.5rem 0;
+    gap: 0.6rem;
+  }
+
+  /* INSTALL POPUP FIX */
+  .install-popup {
+    width: 95%;
+    padding: 0.8rem;
+  }
+  .install-text strong {
+    font-size: 0.85rem;
+  }
+  .install-text p {
+    font-size: 0.72rem;
+  }
+}
+
+/* Very small phones - 1 column gallery */
+@media (max-width: 420px) {
+  .gallery-grid-inner {
+    grid-template-columns: repeat(1, 1fr) !important;
+  }
+  #navbar .nav-links {
+    gap: 0.4rem;
+  }
+  #navbar .nav-links a {
+    font-size: 0.7rem;
+  }
+}
