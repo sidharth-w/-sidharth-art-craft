@@ -66,6 +66,7 @@ document.querySelectorAll('.section').forEach(sec => observer.observe(sec));
 
 /* ----------------- GALLERY SECTIONS ----------------- */
 let currentBudget = 200000;
+const isMobile = window.innerWidth <= 768;
 
 function renderAllSections(budgetMax = 200000) {
   const container = document.getElementById('gallery-sections');
@@ -97,34 +98,25 @@ function renderAllSections(budgetMax = 200000) {
       filtered.forEach(p => {
         const card = document.createElement('div');
         card.className = 'gallery-card';
-        card.innerHTML = `
-  <img src="${p.image}" alt="${p.title}" loading="lazy">
-  <div class="card-overlay">
-    <a href="javascript:void(0)" class="view-btn" data-id="${p.id}">👁 View</a>
-    <a href="https://wa.me/918926006763?text=${encodeURIComponent(WA_TEXT(p.title, p.price))}"
-       target="_blank" class="whatsapp-btn" onclick="event.stopPropagation()">💬 Enquire</a>
-  </div>
-`;
 
-// first tap → show overlay, second tap → action
-card.addEventListener('click', (e) => {
-  const overlay = card.querySelector('.card-overlay');
-  const isVisible = overlay.style.opacity === '1';
+        if (isMobile) {
+          // MOBILE → no overlay, tap image opens modal directly
+          card.innerHTML = `
+            <img src="${p.image}" alt="${p.title}" loading="lazy">
+          `;
+          card.addEventListener('click', () => openModal(p));
+        } else {
+          // DESKTOP → hover overlay with View + Enquire
+          card.innerHTML = `
+            <img src="${p.image}" alt="${p.title}" loading="lazy">
+            <div class="card-overlay">
+              <a href="javascript:void(0)" class="view-btn" data-id="${p.id}">👁 View</a>
+              <a href="https://wa.me/918926006763?text=${encodeURIComponent(WA_TEXT(p.title, p.price))}"
+                 target="_blank" class="whatsapp-btn" onclick="event.stopPropagation()">💬 Enquire</a>
+            </div>
+          `;
+        }
 
-  if (!isVisible) {
-    // first tap - just show overlay
-    overlay.style.opacity = '1';
-    e.preventDefault();
-
-    // hide overlay if user taps elsewhere
-    document.addEventListener('click', function hideOverlay(ev) {
-      if (!card.contains(ev.target)) {
-        overlay.style.opacity = '0';
-        document.removeEventListener('click', hideOverlay);
-      }
-    });
-  }
-});    
         grid.appendChild(card);
       });
       section.appendChild(grid);
@@ -132,6 +124,7 @@ card.addEventListener('click', (e) => {
     container.appendChild(section);
   });
 
+  // attach view btn listeners for desktop only
   document.querySelectorAll('.view-btn').forEach(btn => {
     btn.addEventListener('click', e => {
       const id = +e.target.dataset.id;
@@ -175,8 +168,6 @@ window.addEventListener('beforeinstallprompt', (e) => {
   deferredPrompt = e;
 });
 
-// show after 3s → auto hide after 3s
-// only show if NOT already installed
 const isInstalled = window.matchMedia('(display-mode: standalone)').matches
   || window.navigator.standalone === true;
 
