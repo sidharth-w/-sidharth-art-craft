@@ -156,12 +156,18 @@ window.addEventListener('beforeinstallprompt', (e) => {
 });
 
 // show after 3s → auto hide after 3s
-setTimeout(() => {
-  installPopup.classList.remove('hidden');
+// only show if NOT already installed
+const isInstalled = window.matchMedia('(display-mode: standalone)').matches
+  || window.navigator.standalone === true;
+
+if (!isInstalled) {
   setTimeout(() => {
-    installPopup.classList.add('hidden');
+    installPopup.classList.remove('hidden');
+    setTimeout(() => {
+      installPopup.classList.add('hidden');
+    }, 5000);
   }, 5000);
-}, 5000);
+}
 
 installBtn.addEventListener('click', async () => {
   if (deferredPrompt) {
