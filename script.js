@@ -98,13 +98,14 @@ function renderAllSections(budgetMax = 200000) {
         const card = document.createElement('div');
         card.className = 'gallery-card';
         card.innerHTML = `
-          <img src="${p.image}" alt="${p.title}" loading="lazy">
-          <div class="card-overlay">
-            <a href="javascript:void(0)" class="view-btn" data-id="${p.id}">View</a>
-            <a href="https://wa.me/918926006763?text=${encodeURIComponent(WA_TEXT(p.title, p.price))}"
-               target="_blank" class="whatsapp-btn">Enquire</a>
-          </div>
-        `;
+  <img src="${p.image}" alt="${p.title}" loading="lazy">
+  <div class="card-overlay">
+    <a href="javascript:void(0)" class="view-btn" data-id="${p.id}">👁 View</a>
+    <a href="https://wa.me/918926006763?text=${encodeURIComponent(WA_TEXT(p.title, p.price))}"
+       target="_blank" class="whatsapp-btn" onclick="event.stopPropagation()">💬 Enquire</a>
+  </div>
+`;
+card.addEventListener('click', () => openModal(p));     
         grid.appendChild(card);
       });
       section.appendChild(grid);
