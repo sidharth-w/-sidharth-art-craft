@@ -513,3 +513,9 @@ body.light .install-text strong { color: #000; }
     grid-template-columns: repeat(2, 1fr) !important;
   }
 }
+
+@media (max-width: 768px) {
+  .card-overlay .whatsapp-btn {
+    display: none;
+  }
+}
