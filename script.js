@@ -183,3 +183,26 @@ function init() {
   renderAllSections(200000);
 }
 init();
+
+// HAMBURGER MENU
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+
+hamburger.addEventListener('click', (e) => {
+  e.stopPropagation();
+  mobileMenu.classList.toggle('hidden');
+});
+
+// close menu when link clicked
+document.querySelectorAll('.mobile-link').forEach(link => {
+  link.addEventListener('click', () => {
+    mobileMenu.classList.add('hidden');
+  });
+});
+
+// close menu when clicking outside
+document.addEventListener('click', (e) => {
+  if (!mobileMenu.contains(e.target) && e.target !== hamburger) {
+    mobileMenu.classList.add('hidden');
+  }
+});
