@@ -105,7 +105,26 @@ function renderAllSections(budgetMax = 200000) {
        target="_blank" class="whatsapp-btn" onclick="event.stopPropagation()">💬 Enquire</a>
   </div>
 `;
-card.addEventListener('click', () => openModal(p));     
+
+// first tap → show overlay, second tap → action
+card.addEventListener('click', (e) => {
+  const overlay = card.querySelector('.card-overlay');
+  const isVisible = overlay.style.opacity === '1';
+
+  if (!isVisible) {
+    // first tap - just show overlay
+    overlay.style.opacity = '1';
+    e.preventDefault();
+
+    // hide overlay if user taps elsewhere
+    document.addEventListener('click', function hideOverlay(ev) {
+      if (!card.contains(ev.target)) {
+        overlay.style.opacity = '0';
+        document.removeEventListener('click', hideOverlay);
+      }
+    });
+  }
+});    
         grid.appendChild(card);
       });
       section.appendChild(grid);
