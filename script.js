@@ -19,11 +19,9 @@ const artQuotes = [
   "In art, the hand can never execute anything higher than the heart can imagine. – Emerson",
 ];
 
-// pick random quote on every load
 const quoteEl = document.getElementById('art-quote');
 const randomQuote = artQuotes[Math.floor(Math.random() * artQuotes.length)];
 quoteEl.textContent = `"${randomQuote}"`;
-
 
 /* ----------------- CONSTANTS ----------------- */
 const modal = document.getElementById('modal');
@@ -73,7 +71,6 @@ function renderAllSections(budgetMax = 200000) {
   const container = document.getElementById('gallery-sections');
   container.innerHTML = '';
 
-  // auto-detect unique categories from data.js
   const categories = [...new Set(paintings.map(p => p.category))];
 
   categories.forEach(cat => {
@@ -115,7 +112,6 @@ function renderAllSections(budgetMax = 200000) {
     container.appendChild(section);
   });
 
-  // attach view btn listeners
   document.querySelectorAll('.view-btn').forEach(btn => {
     btn.addEventListener('click', e => {
       const id = +e.target.dataset.id;
@@ -159,9 +155,13 @@ window.addEventListener('beforeinstallprompt', (e) => {
   deferredPrompt = e;
 });
 
+// show after 3s → auto hide after 3s
 setTimeout(() => {
   installPopup.classList.remove('hidden');
-}, 3000);
+  setTimeout(() => {
+    installPopup.classList.add('hidden');
+  }, 5000);
+}, 5000);
 
 installBtn.addEventListener('click', async () => {
   if (deferredPrompt) {
@@ -193,14 +193,12 @@ hamburger.addEventListener('click', (e) => {
   mobileMenu.classList.toggle('hidden');
 });
 
-// close menu when link clicked
 document.querySelectorAll('.mobile-link').forEach(link => {
   link.addEventListener('click', () => {
     mobileMenu.classList.add('hidden');
   });
 });
 
-// close menu when clicking outside
 document.addEventListener('click', (e) => {
   if (!mobileMenu.contains(e.target) && e.target !== hamburger) {
     mobileMenu.classList.add('hidden');
